@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>H/W</title>
+</head>
+<body>
+<input class="FirstInput" type="text" name="pageNumber" placeholder="номер страницы" value="5">
+<input class="SecondInput" type="text" name="limit" placeholder="лимит" value="6">
+<br>
+<button class="theButton">запрос</button>
+<br>
+<div class="images"></div>
+<script type="text/javascript">
+	let myButton = document.querySelector(".theButton");
+	let inputN1;
+	let inputN2;
+        async function sendRequest() {
+		let firstInputtext = document.querySelector('.FirstInput').value;
+		let secondInputtext = document.querySelector('.SecondInput').value;
+		firstInputtext = Number(firstInputtext);
+		secondInputtext = Number(secondInputtext)
+		inputN1 = firstInputtext;
+		inputN2 = secondInputtext;
+		let Answr = " ";
+		if ((firstInputtext > 10 || firstInputtext < 0 || typeof(firstInputtext)!='number')&& (secondInputtext > 10 || secondInputtext < 0 || typeof(secondInputtext)!='number')) {
+			 console.log("Номер страницы и лимит вне диапазона от 1 до 10");
+		}
+		else if (firstInputtext > 10 || firstInputtext < 0 || typeof(firstInputtext)!='number'){
+			console.log("Номер страницы вне диапазона от 1 до 10");
+		}
+		else if (secondInputtext > 10 || secondInputtext < 0 || typeof(secondInputtext)!='number') {
+			console.log ("Лимит вне диапазона от 1 до 10");
+		}
+		else {
+			let sending = new Promise (function(resolve,reject){
+
+		let request = new XMLHttpRequest();
+		request.open("get",`https://picsum.photos/v2/list?page=${firstInputtext}&limit=${secondInputtext}`);
+		request.send();
+		request.onerror = function() {
+			reject("ERROR");
+		}
+		request.onload = function() {
+			Answr = request.response;
+			//console.log(Answr);
+			resolve(Answr);
+			
+		}
+		})
+		let result = await sending;
+		return result;
+
+			
+	}
+
+
+	}
+
+let fff = sendRequest();
+fff.then(function(result) {
+	console.log(result);
+})
+
+	//myButton.addEventListener('click',sendRequest); 
+
+</script>
+</body>
+</html>
