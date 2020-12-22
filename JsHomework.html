@@ -4,8 +4,8 @@
 	<title>H/W</title>
 </head>
 <body>
-<input class="FirstInput" type="text" name="pageNumber" placeholder="номер страницы" value="5">
-<input class="SecondInput" type="text" name="limit" placeholder="лимит" value="6">
+<input class="FirstInput" type="text" name="pageNumber" placeholder="номер страницы" value="0">
+<input class="SecondInput" type="text" name="limit" placeholder="лимит" value="10">
 <br>
 <button class="theButton">запрос</button>
 <br>
@@ -55,13 +55,30 @@
 
 
 	}
+let ImgDiv = document.querySelector(".images"); 
+let ImgUrlArr = new Array();
 
+function doSend() {
 let fff = sendRequest();
 fff.then(function(result) {
-	console.log(result);
+	result = JSON.parse(result);
+
+	for (let i = 0; i < inputN2; i++) {
+	//ImgDiv.innerHTML += "hello";
+	ImgUrlArr.push(result[`${i}`]["download_url"]);
+
+}
+	for (let i = 0; i < inputN2 - inputN1; i++) {
+	ImgDiv.innerHTML += `<img src = ${ImgUrlArr[i]} width=65px height=65px > `;
+	console.log(ImgUrlArr[i]);
+
+}
 })
 
-	//myButton.addEventListener('click',sendRequest); 
+
+}
+	myButton.addEventListener('click',doSend);
+
 
 </script>
 </body>
