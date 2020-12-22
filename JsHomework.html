@@ -11,6 +11,22 @@
 <br>
 <div class="images"></div>
 <script type="text/javascript">
+	let savedDATA;
+	let ImgDiv = document.querySelector(".images"); 
+	let ImgUrlArr2 = new Array();
+	if (localStorage.getItem("savedIMG") != null) {
+		console.log("here");
+
+		console.log(ImgUrlArr2);
+
+		for (let i = 0; i < Number((localStorage.getItem("input2")))-Number((localStorage.getItem("input1"))); i++) {
+			ImgUrlArr2.push(localStorage.getItem(`savedIMG${i}`));
+		}
+		for (let i = 0; i < Number((localStorage.getItem("input2")))-Number((localStorage.getItem("input1"))); i++) {
+			ImgDiv.innerHTML += `<img src=${ImgUrlArr2[i]} width=65px height=65px> `;
+		}
+		console.log(ImgUrlArr2);
+	}
 	let myButton = document.querySelector(".theButton");
 	let inputN1;
 	let inputN2;
@@ -55,7 +71,6 @@
 
 
 	}
-let ImgDiv = document.querySelector(".images"); 
 let ImgUrlArr = new Array();
 
 function doSend() {
@@ -71,14 +86,16 @@ fff.then(function(result) {
 	for (let i = 0; i < inputN2 - inputN1; i++) {
 	ImgDiv.innerHTML += `<img src = ${ImgUrlArr[i]} width=65px height=65px > `;
 	console.log(ImgUrlArr[i]);
-
+}
+	for (let i = 0; i < inputN2 - inputN1; i++) {
+	localStorage.setItem("savedIMG"+i,ImgUrlArr[i]);
 }
 })
-
+localStorage.setItem("input1",inputN1);
+localStorage.setItem("input2",inputN2);
 
 }
 	myButton.addEventListener('click',doSend);
-
 
 </script>
 </body>
